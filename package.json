@@ -1,0 +1,23 @@
+{
+  "name": "nodejs_crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Antor-094/NodeJS_CRUD.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Antor-094/NodeJS_CRUD/issues"
+  },
+  "homepage": "https://github.com/Antor-094/NodeJS_CRUD#readme",
+  "dependencies": {
+    "axios": "^0.26.0",
+    "express": "^4.17.2"
+  }
+}
