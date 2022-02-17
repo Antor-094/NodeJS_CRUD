@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,8 @@
   },
   "homepage": "https://github.com/Antor-094/NodeJS_CRUD#readme",
   "dependencies": {
-    "axios": "^0.26.0",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mongoose": "^6.2.2",
+    "nodemon": "^2.0.15"
   }
 }
