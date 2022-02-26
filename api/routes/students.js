@@ -94,7 +94,7 @@ router.patch('/:studentId',(req,res,next)=>{
     const updateOps={};
 
     for(const info of req.body){
-        updateOps[info.key]=updateOps[info.value];
+        updateOps[info.key]=info.value;
     }
     Student.updateOne({_id:id},{$set : updateOps})
     
