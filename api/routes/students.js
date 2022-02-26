@@ -1,49 +1,126 @@
 const express = require('express');
-const res = require('express/lib/response');
-const router = express.Router();
+const { default: mongoose } = require('mongoose');
 const Student = require('../models/student');
-const mongoose = require('mongoose');
+const router = express.Router();
+
+router.get('/',(req,res,next)=>{
+     Student.find()
+     .then(result=>{
+        
+         res.status(200).json({
+             StudentData : result
+         })
+     })
+     .catch(err =>{
+        
+        console.log(err);
+        res.status(500).json({
+            error:err
+        })
+
+     })
+})
+router.get('/:id',(req,res,next)=>{
+    console.log(req.params.id);
+    Student.findById(req.params.id)
+    .then(result=>{
+        res.status(200).json({
+            StudentOne : result
+        })
+    })
+    .catch(err =>{
+        res.status(500).json({
+            error:err
+        })
+    })
 
 
-router.get('/',(req, res, next) => {
-
-  Student.find()
-  .exec()
-  .then(result => res.status(200).json(result))
-  .catch(err => res.status(500).json(err));
 })
 
-router.post('/',(req, res, next) => {
+router.post('/',(req,res,next)=>{
+   
+   const student =new Student({
+       _id:new mongoose.Types.ObjectId,
+       name:req.body.name,
+       email:req.body.email,
+       phone:req.body.phone,
+       gender:req.body.gender
 
-    const info ={
-        _id:mongoose.Types.ObjectId,
-        name: req.body.name,
-        batch:req.body.batch
-    }
-    const student = new Student(info);
-    student.save()
-    .then(result => res.status(200).json(result))
-    .catch(err => res.status(500).json(err));
+
+   })
+
+   student.save()
+   .then(result=>{
+       console.log(result),
+       res.status(200).json({
+           StuentDetails:result
+       })
+   })
+   .catch(err=>{
+       console.log(err),
+       res.status(500).json({
+           error:err
+       })
+   })
+
+})
+router.put('/:id',(req,res,next)=>{
+    console.log(req.params.id);
+    Student.findByIdAndUpdate({_id:req.params.id},{
+        $set:{
+          name:req.body.name,
+          email:req.body.email,
+          phone:req.body.phone,
+          gender:req.body.gender
+
+        }
+    })
+    .then(result=>{
+        res.status(200).json({
+            UpdatedStuentInfo:result
+        })
+    })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error:err
+        })
+    })
 })
 
-router.get('/studentId',(req, res, next) => {
+router.patch('/:studentId',(req,res,next)=>{
 
-const id= req.params.studentId;
-
-    Student.findById(id)
-    .exec()
-    .then(result => res.status(200).json(result))
-    .catch(err => res.status(500).json(err));
-  })
-  
-  router.delete('/',(req, res, next) => {
-    
     const id = req.params.studentId;
-    Student.deleteOne({_id: id})
-    .exec()
-    .then(result => res.status(200).json(result))
-    .catch(err => res.status(500).json(err));
-  })
-  
+    const updateOps={};
 
-module.exports = router;
+    for(const info of req.body){
+        updateOps[info.key]=updateOps[info.value];
+    }
+    Student.updateOne({_id:id},{$set : updateOps})
+    
+    .exec()
+    .then(result=>res.status(200).json(result))
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            error:err
+        })
+    })
+})
+
+router.delete('/:id',(req,res,next)=>{
+    Student.remove({_id:req.params.id})
+    .then(result=>{
+        res.status(200).json({
+            message:'Student deleted',
+            result:result
+        })
+    })
+    .catch(err=>{
+        res.status(500).json({
+            error:err
+        })
+    })
+})
+
+module.exports= router;

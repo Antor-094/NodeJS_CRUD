@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Antor-094/NodeJS_CRUD#readme",
   "dependencies": {
+    "body-parser": "^1.19.2",
     "express": "^4.17.2",
     "mongoose": "^6.2.2",
     "nodemon": "^2.0.15"
